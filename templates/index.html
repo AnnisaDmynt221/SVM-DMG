@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<link rel="stylesheet" href="{{url_for('static', filename='../static/styles.css')}}">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediksi Diabetes Gestasional</title>
+</head>
+<body>
+  <div class="navbar bg-base-100">
+    <a class="btn btn-ghost text-xl">Prediksi Diabetes Gestasional</a>
+  </div>
+
+    <div class="container contact-form">
+        <div class="contact-image">
+            <img src="../static/icon/gestational-diabetes.png" alt="gestational-diabetes"/>
+        </div>
+        <form action="{{url_for('predict')}}" method="POST">
+            <h3>Klasifikasi Diabetes Gestasional</h3>
+           <div class="row">
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <h6>Berapa HighBP (Tekanan Darah Tinggi) anda?</h6>    
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="HighBP" value="0" id="normalHighBP">
+                            <label class="form-check-label" for="normalHighBP">
+                            Normal 110/70-120/80mmHg
+                            </label>
+                            </div>
+                         <div class="form-check">
+                           <input class="form-check-input" type="radio" name="HighBP" value="1" id="tinggiHighBP">
+                           <label class="form-check-label" for="tinggHighBP">
+                            Tinggi 140/90mmHg
+                           </label>
+                         </div>
+                      </div>    
+
+                    <div class="form-group">
+                        <h6>Berapa kadar kolesterol (HighChol) anda terakhir kali?</h6>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="HighChol" value="0" id="normalHighChol">
+                            <label class="form-check-label" for="normalHighChol">
+                            Normal 120-200mg/dL
+                            </label>
+                            </div>
+                         <div class="form-check">
+                           <input class="form-check-input" type="radio" name="HighChol" value="1" id="tinggiHighChol">
+                           <label class="form-check-label" for="tinggiHighChol">
+                            Tinggi >200mg/dL
+                           </label>
+                         </div>
+                      </div>    
+                        
+                    <div class="form-group">
+                        <h6>Apakah anda melakukan CholCheck dalam 5 tahun terakhir?</h6>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="CholCheck" value="0" id="CholCheckNo">
+                            <label class="form-check-label" for="CholCheckNo">
+                           Tidak
+                            </label>
+                            </div>
+                         <div class="form-check">
+                           <input class="form-check-input" type="radio" name="CholCheck" value="1" id="CholCheckYes">
+                           <label class="form-check-label" for="CholCheckYes">
+                             Ya
+                           </label>
+                         </div>
+                      </div>
+
+                    <div class="form-group">
+                        <h6>Apakah anda terkena stroke?</h6>
+                            <div class="form-check">
+                            <input class="form-check-input" type="radio" name="Stroke" value="0" id="StrokeNo">
+                            <label class="form-check-label" for="StrokeNo">
+                           Tidak
+                            </label>
+                            </div>
+                         <div class="form-check">
+                           <input class="form-check-input" type="radio" name="Stroke" value="1" id="StrokeYes">
+                           <label class="form-check-label" for="StrokeYes">
+                             Ya
+                           </label>
+                         </div>
+                      </div>    
+
+                    <div class="form-group">
+                        <h6>Apakah anda terkena coronary heart disease (CHD) atau myocardial infarction (MI)?</h6>
+                          <div class="form-check">
+                           <input class="form-check-input" type="radio" name="HeartDiseaseorAttack" value="0" id="sHeartDiseaseorAttackNo">
+                           <label class="form-check-label" for="HeartDiseaseorAttackNo">
+                          Tidak
+                           </label>
+                           </div>
+                        <div class="form-check">
+                          <input class="form-check-input" type="radio" name="HeartDiseaseorAttack" value="1" id="HeartDiseaseorAttackYes">
+                          <label class="form-check-label" for="HeartDiseaseorAttackYes">
+                            Ya
+                          </label>
+                        </div>
+                     </div>
+
+                    <div class="form-group">
+                        <h6>Apakah anda melakukan aktivitas fisik dalam 30 hari terakhir?</h6>
+                          <div class="form-check">
+                           <input class="form-check-input" type="radio" name="PhysActivity" value="0" id="PhysActivityNo">
+                           <label class="form-check-label" for="PhysActivityNo">
+                          Tidak
+                           </label>
+                           </div>
+                        <div class="form-check">
+                          <input class="form-check-input" type="radio" name="PhysActivity" value="1" id="PhysActivityYes">
+                          <label class="form-check-label" for="PhysActivityYes">
+                            Ya
+                          </label>
+                        </div>
+                     </div>
+                           
+                    <div class="form-group">
+                        <h6>Apakah anda mengonsumsi alkohol selama kehamilan?</h6>
+                          <div class="form-check">
+                           <input class="form-check-input" type="radio" name="HvyAlcoholConsump" value="0" id="HvyAlcoholConsumpNo">
+                           <label class="form-check-label" for="HvyAlcoholConsumpNo">
+                          Tidak
+                           </label>
+                           </div>
+                        <div class="form-check">
+                          <input class="form-check-input" type="radio" name="HvyAlcoholConsump" value="1" id="HvyAlcoholConsumpYes">
+                          <label class="form-check-label" for="HvyAlcoholConsumpYes">
+                            Ya
+                          </label>
+                        </div>
+                     </div>
+                            
+                    <div class="form-group">
+                        <h6>Secara umum kesehatan anda berada di tingkat mana?</h6>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="GenHlth" value="1" id="GenHlth1">
+                              <label class="form-check-label" for="GenHlth1">
+                              Excellent
+                              </label>
+                          </div>
+                        <div class="form-check">
+                          <input class="form-check-input" type="radio" name="GenHlth" value="2" id="GenHlth2">
+                          <label class="form-check-label" for="GenHlth2">
+                            Very Good
+                          </label>
+                        </div>
+                        <div class="form-check">
+                          <input class="form-check-input" type="radio" name="GenHlth" value="3" id="GenHlth3">
+                            <label class="form-check-label" for="GenHlth3">
+                            Good
+                            </label>
+                        </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="GenHlth" value="4" id="GenHlth4">
+                        <label class="form-check-label" for="GenHlth4">
+                          Fair
+                        </label>
+                      </div>
+                      <div class="form-check">
+                          <input class="form-check-input" type="radio" name="GenHlth" value="5" id="GenHlth5">
+                          <label class="form-check-label" for="GenHlth5">
+                            Poor
+                          </label>
+                        </div>
+                      </div>
+
+                    <div class="form-group">
+                        <h6>Apakah anda kesulitan berjalan atau menaiki tangga?</h6>
+                         <div class="form-check">
+                           <input class="form-check-input" type="radio" name="DiffWalk" value="0" id="DiffWalkNo">
+                           <label class="form-check-label" for="DiffWalkNo">
+                          Tidak
+                           </label>
+                           </div>
+                        <div class="form-check">
+                          <input class="form-check-input" type="radio" name="DiffWalk" value="1" id="DiffWalkYes">
+                          <label class="form-check-label" for="DiffWalkYes">
+                            Ya
+                          </label>
+                        </div>
+                     </div>
+
+                    <div class="form-group">
+                        <h6>Jenis kelamin bayi anda?</h6>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" name="Sex" value="0" id="SexNo">
+                            <label class="form-check-label" for="SexNo">
+                            Perempuan
+                            </label>
+                            </div>
+                         <div class="form-check">
+                           <input class="form-check-input" type="radio" name="Sex" value="1" id="SexYes">
+                           <label class="form-check-label" for="SexYes">
+                            Laki-laki
+                           </label>
+                         </div>
+                      </div>
+
+                    <div class="form-group">
+                        <h6>Apakah anda pernah merokok setidaknya 100 batang rokok (5 bungkus rokok) sepanjang hidup anda?</h6>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" name="Smoker" value="0" id="SmokerNo">
+                            <label class="form-check-label" for="SmokerNo">
+                           Tidak
+                            </label>
+                            </div>
+                         <div class="form-check">
+                           <input class="form-check-input" type="radio" name="Smoker" value="1" id="SmokerYes">
+                           <label class="form-check-label" for="SmokerYes">
+                             Ya
+                           </label>
+                         </div>
+                      </div>
+
+                    <div class="form-group">
+                        <h6>Kategori usia ibu hamil?</h6>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" name="Age" value="1" id="Age1">
+                            <label class="form-check-label" for="Age1">
+                              18-24
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" name="Age" value="2" id="Age2">
+                            <label class="form-check-label" for="Age2">
+                              25-29
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" name="Age" value="3" id="Age3">
+                            <label class="form-check-label" for="Age3">
+                              30-34
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" name="Age" value="4" id="Age4">
+                            <label class="form-check-label" for="Age4">
+                              35-39
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" name="Age" value="5" id="Age5">
+                            <label class="form-check-label" for="Age5">
+                              40-44
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" name="Age" value="6" id="Age6">
+                            <label class="form-check-label" for="Age6">
+                              45-49
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" name="Age" value="7" id="Age7">
+                            <label class="form-check-label" for="Age7">
+                              50-54
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" name="Age" value="8" id="Age8">
+                            <label class="form-check-label" for="Age8">
+                              55-59
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" name="Age" value="9" id="Age9">
+                            <label class="form-check-label" for="Age9">
+                              60-64
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" name="Age" value="10" id="Age10">
+                            <label class="form-check-label" for="Age10">
+                              65-69
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" name="Age" value="11" id="Age11">
+                            <label class="form-check-label" for="Age11">
+                              70-74
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" name="Age" value="12" id="Age12">
+                            <label class="form-check-label" for="Age12">
+                              75-79
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" name="Age" value="13" id="Age13">
+                            <label class="form-check-label" for="Age13">
+                              80 >
+                            </label>
+                          </div>
+                        </div>
+
+                    <div class="form-group">
+                        <h6>Berapa BMI anda? dihitung dengan cara berat badan (kg) / tinggi badan (m²) = hasil dari pembagian</h6>
+                        <input type="text" name="BMI" class="form-control" placeholder="BMI *" value="" />
+                    </div>
+
+                    <div class="form-group">
+                        <h6>Apakah anda memiliki layanan kesehatan? termasuk asuransi kesehatan dll</h6>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" name="AnyHealthcare" value="0" id="AnyHealthcareNo">
+                            <label class="form-check-label" for="AnyHealthcareNo">
+                           Tidak
+                            </label>
+                            </div>
+                         <div class="form-check">
+                           <input class="form-check-input" type="radio" name="AnyHealthcare" value="1" id="AnyHealthcareYes">
+                           <label class="form-check-label" for="AnyHealthcareYes">
+                             Ya
+                           </label>
+                         </div>
+                      </div>
+                      
+                    <div class="form-group">
+                        <h6>Berapa penghasilan anda dalam sebulan? </h6>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="Income" value="1" id="Income1">
+                            <label class="form-check-label" for="Income1">
+                              5jt
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" name="Income" value="2" id="Income2">
+                            <label class="form-check-label" for="Income2">
+                              10jt
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" name="Income" value="3" id="Income3">
+                            <label class="form-check-label" for="Income3">
+                              15jt
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" name="Income" value="4" id="Income4">
+                            <label class="form-check-label" for="Income4">
+                              20jt
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" name="Income" value="5" id="Income5">
+                            <label class="form-check-label" for="Income5">
+                              25jt
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" name="Income" value="6" id="Income6">
+                            <label class="form-check-label" for="Income6">
+                              30jt
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" name="Income" value="7" id="Income7">
+                            <label class="form-check-label" for="Income7">
+                              35jt
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" name="Income" value="8" id="Income8">
+                            <label class="form-check-label" for="Income8">
+                              40jt
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" name="Income" value="9" id="Income9">
+                            <label class="form-check-label" for="Income9">
+                              45jt
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" name="Income" value="10" id="Income10">
+                            <label class="form-check-label" for="Income10">
+                              50jt
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" name="Income" value="11" id="Income11">
+                            <label class="form-check-label" for="Income11">
+                              55jt
+                            </label>
+                          </div>
+                    </div>
+
+                    <div class="form-group">
+                        <h6>Apakah dalam 12 bulan terakhir anda perlu ke dokter tetapi tidak bisa karena biaya?</h6>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" name="NoDocbcCost" value="0" id="NoDocbcCostNo">
+                            <label class="form-check-label" for="NoDocbcCostNo">
+                           Tidak
+                            </label>
+                            </div>
+                         <div class="form-check">
+                           <input class="form-check-input" type="radio" name="NoDocbcCost" value="1" id="NoDocbcCostYes">
+                           <label class="form-check-label" for="NoDocbcCostYes">
+                             Ya
+                           </label>
+                         </div>
+                      </div>
+
+                    <div class="form-group">
+                        <h6>Tingkat pendidikan anda? </h6>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" name="Education" value="1" id="Education1">
+                            <label class="form-check-label" for="Education1">
+                              Tidak Sekolah
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" name="Education" value="2" id="Education2">
+                            <label class="form-check-label" for="Education2">
+                              Hanya TK
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" name="Education" value="3" id="Education3">
+                            <label class="form-check-label" for="Education3">
+                              SD
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" name="Education" value="4" id="Education4">
+                            <label class="form-check-label" for="Education4">
+                              SMP
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" name="Education" value="5" id="Education5">
+                            <label class="form-check-label" for="Education5">
+                              SMA
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" name="Education" value="6" id="Education6">
+                            <label class="form-check-label" for="Education6">
+                              Sarjana
+                            </label>
+                          </div>
+                      </div> 
+
+                    <div class="form-group">
+                        <h6>Apakah anda mengonsumsi sayur minimal 1 atau lebih macam sayur per hari?</h6>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" name="Veggies" value="0" id="VeggiesNo">
+                            <label class="form-check-label" for="VeggiesNo">
+                           Tidak
+                            </label>
+                            </div>
+                         <div class="form-check">
+                           <input class="form-check-input" type="radio" name="Veggies" value="1" id="VeggiesYes">
+                           <label class="form-check-label" for="VeggiesYes">
+                             Ya
+                           </label>
+                         </div>
+                      </div>
+
+                    <div class="form-group">
+                        <h6>Tingkat depresi anda berkisar antara 0 - 30</h6>
+                        <input type="text" name="MentHlth" class="form-control" placeholder="MentHlth *" value="" />
+                    </div>
+
+                    <div class="form-group">
+                        <h6>Apakah anda mengonsumsi buah minimal 1 atau lebih macam buah per hari?</h6>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" name="Fruits" value="0" id="FruitsNo">
+                            <label class="form-check-label" for="FruitsNo">
+                           Tidak
+                            </label>
+                            </div>
+                         <div class="form-check">
+                           <input class="form-check-input" type="radio" name="Fruits" value="1" id="FruitsYes">
+                           <label class="form-check-label" for="FruitsYes">
+                             Ya
+                           </label>
+                         </div>
+                      </div>
+
+                    <div class="form-group">
+                        <h6>Tingkat kesehatan fisik anda dalam 30 hari terakhir berkisar antara 0 - 30</h6>
+                        <input type="text" name="PhysHlth" class="form-control" placeholder="PhysHlth *" value="" />
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btnContact btn-lg">Prediksi</button>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <h3>Hasil Prediksi</h3>
+                            {{ prediction_text }}
+                      </div>
+                    </div>
+                </div>
+</form>
+</div>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<footer class="footer footer-center p-4 bg-base-300 text-base-content">
+  <aside>
+    <p>Copyright © 2024 - Annisa Damayanti</p>
+  </aside>
+</footer>
+</body>
+</html>
